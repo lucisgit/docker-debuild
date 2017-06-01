@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+srcpkgdir="/package"
+
+verstring=`head -n 1 "$srcpkgdir/debian/changelog"`
+srcpkgname=`echo "$verstring" | awk '{print $1}'`
+srcpkgversion=`echo "$verstring" | awk '{print $2}' | sed -e 's/(\(.*\))/\1/g'`
+srcpkgversiondirmangle=`echo "$srcpkgversion" | sed -e 's/~/-tilde-/g'`
+
+pkgdir="$srcpkgname-$srcpkgversiondirmangle"
+
+# Rsync directory contents (trailing / forced) excluding SVN directories.
+# Using --delete ensures that the directory tree will be clean.
+rsync -l -r --delete --exclude .svn --exclude .git "$srcpkgdir/" "/srv/$pkgdir"
+
+# Use -b if only deb is needed.
+cd "/srv/$pkgdir" && \
+  apt-get update && \
+  mk-build-deps -t "apt-get -y --no-install-recommends" -i "debian/control" && \
+  dpkg-buildpackage -us -uc -sa -rfakeroot
+
+cp /srv/* "$srcpkgdir"
