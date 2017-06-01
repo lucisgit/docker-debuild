@@ -12,5 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 VOLUME /package
 
 COPY packagebuild /usr/local/bin/
+COPY devscripts /root/.devscripts
+
 RUN chmod 755 /usr/local/bin/packagebuild
 CMD ["packagebuild"]

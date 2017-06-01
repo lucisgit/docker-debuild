@@ -10,14 +10,21 @@ srcpkgversiondirmangle=`echo "$srcpkgversion" | sed -e 's/~/-tilde-/g'`
 
 pkgdir="$srcpkgname-$srcpkgversiondirmangle"
 
+echo -e "Preparing package $srcpkgname-$srcpkgversiondirmangle for building."
+# Make sure we are up to date.
+apt-get update -qq
+
 # Rsync directory contents (trailing / forced) excluding SVN directories.
 # Using --delete ensures that the directory tree will be clean.
 rsync -l -r --delete --exclude .svn --exclude .git "$srcpkgdir/" "/srv/$pkgdir"
 
-# Use -b if only deb is needed.
+# Build the package. See ~/.devscripts for building parameters in use.
 cd "/srv/$pkgdir" && \
-  apt-get update && \
-  mk-build-deps -t "apt-get -y --no-install-recommends" -i "debian/control" && \
-  dpkg-buildpackage -us -uc -sa -rfakeroot
+  echo -e "Installing package dependencies..." && \
+  mk-build-deps -t "apt-get -y --no-install-recommends -qq" -i "debian/control" && \
+  echo -e "Building the package" && \
+  debuild && \
+  find ../ -maxdepth 1 -type f -exec mv {} "$srcpkgdir" \; && \
+  echo -e "\nPackage $srcpkgname-$srcpkgversiondirmangle has been built, generated files have been placed in your local package directory."
 
-cp /srv/* "$srcpkgdir"
+
