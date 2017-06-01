@@ -2,6 +2,7 @@
 set -e
 
 srcpkgdir="/package"
+cd "$srcpkgdir" || exit 1
 
 verstring=`head -n 1 "$srcpkgdir/debian/changelog"`
 srcpkgname=`echo "$verstring" | awk '{print $1}'`
@@ -14,9 +15,9 @@ echo -e "Preparing package $srcpkgname-$srcpkgversiondirmangle for building."
 # Make sure we are up to date.
 apt-get update -qq
 
-# Rsync directory contents (trailing / forced) excluding SVN directories.
+# Rsync directory contents (trailing / forced).
 # Using --delete ensures that the directory tree will be clean.
-rsync -l -r --delete --exclude .svn --exclude .git "$srcpkgdir/" "/srv/$pkgdir"
+rsync -l -r --delete --exclude .git "$srcpkgdir/" "/srv/$pkgdir"
 
 # Build the package. See ~/.devscripts for building parameters in use.
 cd "/srv/$pkgdir" && \
