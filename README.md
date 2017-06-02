@@ -22,10 +22,10 @@ lucisgit/docker-debuild -b` will run `debuild -b` on your code. Refer to
 manpage](https://manpages.debian.org/jessie/devscripts/debuild.1.en.html)
 for the full list of options.
 
-## Choosing right Debian release
+## Choosing Debian release
 
 Use docker image tag for particular version of Debian in your build
-container, i.e. lucisgit/docker-debuild:jessie will provide you with Debian 8.x (Jessie). Using no tag or *latest* corresponds to current stable release of Debian. 
+container, i.e. lucisgit/docker-debuild:jessie will provide you with Debian 8.x (Jessie). Using no tag, *latest* or *stable* corresponds to current stable release of Debian. 
 
 Repo branches correspond to the docker image tags, so you can easily see
 which releases are supported.
