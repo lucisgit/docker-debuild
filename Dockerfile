@@ -1,5 +1,5 @@
 # Dockerfile for building Debian packages using current stable repo.
-FROM debian:jessie
+FROM debian:stable
 MAINTAINER Ruslan Kabalin <r.kabalin@lancaster.ac.uk>
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
