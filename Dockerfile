@@ -2,6 +2,7 @@
 FROM debian:stable
 MAINTAINER Ruslan Kabalin <r.kabalin@lancaster.ac.uk>
 
+COPY sources-list /etc/apt/sources.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
   devscripts \
   equivs \
