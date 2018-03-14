@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   devscripts \
   equivs \
   rsync \
+  locales \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 

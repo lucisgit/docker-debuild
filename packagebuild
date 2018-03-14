@@ -11,6 +11,13 @@ srcpkgversiondirmangle=`echo "$srcpkgversion" | sed -e 's/~/-tilde-/g'`
 
 pkgdir="$srcpkgname-$srcpkgversiondirmangle"
 
+# Generate locale, if required it needs to be defined in $LOCALE env var.
+if [ -n "$LOCALE" ]; then
+  echo -e "Generating locale $LOCALE."
+  sed -i -e "s/# $LOCALE/$LOCALE/" /etc/locale.gen && \
+  locale-gen
+fi
+
 echo -e "Preparing package $srcpkgname-$srcpkgversiondirmangle for building."
 # Make sure we are up to date.
 apt-get update -qq

@@ -26,9 +26,16 @@ for the full list of options.
 
 Use docker image tag for particular version of Debian in your build
 container, i.e. lucisgit/docker-debuild:jessie will provide you with Debian 8.x (Jessie). Using no tag, *latest* or *stable* corresponds to current stable release of Debian. 
-
 Repo branches correspond to the docker image tags, so you can easily see
 which releases are supported.
+
+## Locale
+
+You may switch locale by providing the one you need in LOCALE env variable, e.g.
+
+```bash
+$ docker run --rm -v $(pwd):/package -e LOCALE=en_GB.UTF-8 lucisgit/docker-debuild -b
+```
 
 ## Usage example
 
