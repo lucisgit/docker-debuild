@@ -22,6 +22,11 @@ lucisgit/docker-debuild -b` will run `debuild -b` on your code. Refer to
 manpage](https://manpages.debian.org/jessie/devscripts/debuild.1.en.html)
 for the full list of options.
 
+You can pass environment varables as well if required, e.g.
+```bash
+docker run --rm -e DEB_BUILD_OPTIONS=noddebs -v $(pwd):/package lucisgit/docker-debuild
+```
+
 ## Choosing Debian release
 
 Use docker image tag for particular version of Debian in your build
