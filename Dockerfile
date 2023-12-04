@@ -1,5 +1,5 @@
 # Dockerfile for building Debian packages using current stable repo.
-FROM debian:stable
+FROM debian:bookworm
 MAINTAINER Ruslan Kabalin <r.kabalin@lancaster.ac.uk>
 
 COPY sources-list /etc/apt/sources.list
